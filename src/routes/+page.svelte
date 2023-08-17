@@ -1,8 +1,16 @@
 <script lang="ts">
 
+    import { onMount } from "svelte";
     import Header, { HEADER_HEIGHT_PX } from "$lib/components/Header.svelte";
     import Separator, { separatorPositionRightPx, SEPARATOR_WIDTH } from "$lib/components/Separator.svelte";
     import RenderPanel from "$lib/components/RenderPanel.svelte";
+
+    onMount(() => {
+        window.addEventListener('resize', () => {
+            // Update the whole window
+            separatorPositionRightPx.set($separatorPositionRightPx);
+        });
+    });
 
 </script>
 
@@ -34,7 +42,7 @@
     }
 
     main {
-        --render-panel-width: calc(100% - var(--separator-position-right) - var(--separator-width));
+        --render-panel-width: calc(100vw - var(--separator-position-right) - var(--separator-width));
 
         width: 100%;
         height: 100%;

@@ -14,19 +14,19 @@
             return;
         }
 
-        resizeCanvasToFit();
         GW.initSpace(canvas);
+        resizeCanvasToFit();
+
+        window.addEventListener('resize', resizeCanvasToFit);
+        separatorPositionRightPx.subscribe(resizeCanvasToFit);
     }
 
     function resizeCanvasToFit(): void {
-        if (canvas === undefined || self === undefined) return;
+        if (self === undefined) return;
 
-        canvas.width = self.clientWidth;
-        canvas.height = self.clientHeight;
+        GW.resize(self.clientWidth, self.clientHeight);
 
     }
-
-    separatorPositionRightPx.subscribe(resizeCanvasToFit);
 
     onMount(init);
 

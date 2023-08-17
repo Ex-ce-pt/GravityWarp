@@ -7,6 +7,7 @@ let scene: THREE.Scene;
 let renderer: THREE.WebGLRenderer;
 
 let object: any = {};
+
 function sizeIntoOrthCameraBounds(width: number, height: number): [number, number, number, number] {
     return [width / -2, width / 2, height / 2, height / -2];
 }
@@ -21,9 +22,10 @@ export function initSpace(c: HTMLCanvasElement): void {
 
     scene = new THREE.Scene();
 
-    camera = new THREE.OrthographicCamera(...sizeIntoOrthCameraBounds(canvas.width, canvas.height), 1, 10000);
+    camera = new THREE.OrthographicCamera();
+    camera.near = 1;
+    camera.far = 10_000;
     camera.position.z = 1000;
-    camera.matrixAutoUpdate = true;
     scene.add(camera);
     
     object.geometry = new THREE.BoxGeometry(100, 100, 100);
@@ -36,7 +38,19 @@ export function initSpace(c: HTMLCanvasElement): void {
     scene.add(object.mesh);
 
     renderer = new THREE.WebGLRenderer({ canvas });
-    renderer.setSize(canvas.width, canvas.height);
     renderer.setAnimationLoop(onRender);
+    
+}
+
+export function resize(width: number, height: number): void {
+
+    if (canvas == undefined) {
+        console.error("Canvas is undefined. Try calling `initSpace` first.");
+        return;
+    }
+
+    [camera.left, camera.right, camera.top, camera.bottom] = sizeIntoOrthCameraBounds(width, height);
+    camera.updateProjectionMatrix();
+    renderer.setSize(width, height);
 
 }
