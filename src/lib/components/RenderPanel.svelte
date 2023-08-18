@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import { separatorPositionRightPx, SEPARATOR_WIDTH } from "$lib/components/Separator.svelte";
+    import { separatorPositionRightPx } from "$lib/components/Separator.svelte";
     import { onMount } from "svelte";
 
     import * as GW from "$lib/scripts/space"
