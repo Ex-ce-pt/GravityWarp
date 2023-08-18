@@ -1,4 +1,5 @@
 import * as THREE from "three"
+import { type Plane, createPlane } from "./plane"
 
 let canvas: HTMLCanvasElement;
 
@@ -6,7 +7,7 @@ let camera: THREE.OrthographicCamera;
 let scene: THREE.Scene;
 let renderer: THREE.WebGLRenderer;
 
-let object: any = {};
+let plane: Plane;
 
 function sizeIntoOrthCameraBounds(width: number, height: number): [number, number, number, number] {
     return [width / -2, width / 2, height / 2, height / -2];
@@ -27,15 +28,9 @@ export function initSpace(c: HTMLCanvasElement): void {
     camera.far = 10_000;
     camera.position.z = 1000;
     scene.add(camera);
-    
-    object.geometry = new THREE.BoxGeometry(100, 100, 100);
-    object.material = new THREE.MeshBasicMaterial({
-        color: new THREE.Color('white'),
-        wireframe: true
-    });
 
-    object.mesh = new THREE.Mesh(object.geometry, object.material);
-    scene.add(object.mesh);
+    plane = createPlane();
+    scene.add(plane.mesh);
 
     renderer = new THREE.WebGLRenderer({ canvas });
     renderer.setAnimationLoop(onRender);
