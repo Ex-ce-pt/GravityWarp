@@ -47,6 +47,8 @@
         grid-column-end: 2;
         grid-row-start: 2;
         grid-row-end: 3;
+
+        overflow: hidden;
     }
 
     canvas {
