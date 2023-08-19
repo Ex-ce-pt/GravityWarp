@@ -14,9 +14,9 @@ struct Sphere {
     float mass;
 };
 
-uniform int SPHERES_COUNT;
-const int MAX_SPHERES_COUNT = 10;
-uniform Sphere[MAX_SPHERES_COUNT] SPHERES;
+uniform int OBJECTS_COUNT;
+const int MAX_OBJECTS_COUNT = 10;
+uniform Sphere[MAX_OBJECTS_COUNT] OBJECTS;
 
 // Unsafe, apparently
 /*
@@ -41,11 +41,11 @@ float gravity(float distance, float m) {
     return (0.0000001 * m) / (distance * distance);
 }
 
-bool grid(vec2 pos, Sphere[MAX_SPHERES_COUNT] spheres, out vec3 color) {
+bool grid(vec2 pos, Sphere[MAX_OBJECTS_COUNT] spheres, out vec3 color) {
     
     vec2 gravitationalOffset = vec2(0.0);
-    for (int i = 0; i < MAX_SPHERES_COUNT; i++) {
-        if (i >= SPHERES_COUNT) break;
+    for (int i = 0; i < MAX_OBJECTS_COUNT; i++) {
+        if (i >= OBJECTS_COUNT) break;
 
         vec2 tempPos = pos - spheres[i].pos;
         float distance = length(tempPos);
@@ -60,12 +60,15 @@ bool grid(vec2 pos, Sphere[MAX_SPHERES_COUNT] spheres, out vec3 color) {
         gravitationalOffset.x += sphereGravitationalOffset.x;
         gravitationalOffset.y += sphereGravitationalOffset.y;
     }
-    
-    bool isHorizontalLine = moduloFloat(pos.x + gravitationalOffset.x, 1.0 / GRID_SIZE.x) <= LINE_WIDTH * 0.5 || moduloFloat(pos.x + gravitationalOffset.x, 1.0 / GRID_SIZE.x) >= 1.0 / GRID_SIZE.x - LINE_WIDTH * 0.5;
-    bool isVerticalLine = moduloFloat(pos.y + gravitationalOffset.y, 1.0 / GRID_SIZE.y) <= LINE_WIDTH * 0.5 || moduloFloat(pos.y + gravitationalOffset.y, 1.0 / GRID_SIZE.y) >= 1.0 / GRID_SIZE.y - LINE_WIDTH * 0.5;
+
+    vec2 cellSize = vec2(1.0 / GRID_SIZE.x, 1.0 / GRID_SIZE.y);
+    vec2 moduloPos = vec2(moduloFloat(pos.x + gravitationalOffset.x, cellSize.x), moduloFloat(pos.y + gravitationalOffset.y, cellSize.y));
+
+    bool isHorizontalLine = moduloPos.x <= LINE_WIDTH * 0.5 || moduloPos.x >= cellSize.x - LINE_WIDTH * 0.5;
+    bool isVerticalLine = moduloPos.y <= LINE_WIDTH * 0.5 || moduloPos.y >= cellSize.y - LINE_WIDTH * 0.5;
 
     if (isHorizontalLine || isVerticalLine) {
-        color = vec3(LINE_COLOR);
+        color = LINE_COLOR;
         return true;
     } else {
         return false;
@@ -77,7 +80,7 @@ void main() {
     vec2 uv = vUV;
     vec3 color;
 
-    if (!(grid(uv, SPHERES, color))) {
+    if (!(grid(uv, OBJECTS, color))) {
         color = BG_COLOR;
     }
 

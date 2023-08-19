@@ -1,4 +1,5 @@
 import * as THREE from "three"
+import { FRAGMENT_SHADER, VERTEX_SHADER } from "./shaders";
 
 export interface Plane {
     geometry: THREE.PlaneGeometry,
@@ -7,8 +8,29 @@ export interface Plane {
 }
 
 export function createPlane(): Plane {
-    let geometry = new THREE.PlaneGeometry(100, 100);
-    let material = new THREE.MeshBasicMaterial({ color: 0xffffffff });
+    let geometry = new THREE.PlaneGeometry(500, 500);
+
+    function emptyObjects(count: number): { pos: THREE.Vector2, mass: number }[] {
+        let a = [];
+        for (let i = 0; i < count; i++) a.push({ pos: new THREE.Vector2(), mass: 0 });
+        return a;
+    }
+    // Testing purpose
+    // let material = new THREE.MeshBasicMaterial({ color: 0xffffffff });
+    
+    let material = new THREE.ShaderMaterial({ fragmentShader: FRAGMENT_SHADER, vertexShader: VERTEX_SHADER });
+    material.uniforms = {
+        'BG_COLOR': { value: new THREE.Vector3(0.1, 0.1, 0.1) },
+        'GRID_SIZE': { value: new THREE.Vector2(10, 10) },
+        'LINE_WIDTH': { value: 0.005 },
+        'LINE_COLOR': { value: new THREE.Vector3(1, 1, 1) },
+        'TIME': { value: 0 },
+        'ACTION': { value: false },
+
+        'OBJECTS_COUNT': { value: 1 },
+        'OBJECTS': { value: [{ pos: new THREE.Vector2(0.5, 0.5), mass: 10000 }, ...emptyObjects(9)] }
+    };
+
     let mesh = new THREE.Mesh(geometry, material);
 
     return { geometry, material, mesh };
