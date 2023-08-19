@@ -1,5 +1,6 @@
 import * as THREE from "three"
 import { FRAGMENT_SHADER, VERTEX_SHADER } from "./shaders";
+import { emptyShaderObjectProperties } from "./objectProperties";
 
 export interface Plane {
     geometry: THREE.PlaneGeometry,
@@ -10,11 +11,6 @@ export interface Plane {
 export function createPlane(): Plane {
     let geometry = new THREE.PlaneGeometry(500, 500);
 
-    function emptyObjects(count: number): { pos: THREE.Vector2, mass: number }[] {
-        let a = [];
-        for (let i = 0; i < count; i++) a.push({ pos: new THREE.Vector2(), mass: 0 });
-        return a;
-    }
     // Testing purpose
     // let material = new THREE.MeshBasicMaterial({ color: 0xffffffff });
     
@@ -28,7 +24,7 @@ export function createPlane(): Plane {
         'ACTION': { value: false },
 
         'OBJECTS_COUNT': { value: 1 },
-        'OBJECTS': { value: [{ pos: new THREE.Vector2(0.5, 0.5), mass: 10000 }, ...emptyObjects(9)] }
+        'OBJECTS': { value: [{ pos: new THREE.Vector2(0.5, 0.5), mass: 10000 }, ...emptyShaderObjectProperties(9)] }
     };
 
     let mesh = new THREE.Mesh(geometry, material);
