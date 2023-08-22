@@ -76,16 +76,11 @@ export function setZoom(c: number): void {
     resize(canvas.width, canvas.height);
 }
 
-export function setCameraPos(pos: { x: number, y: number }): void {
-    camera.position.setX(pos.x);
-    camera.position.setY(pos.y);
-}
-
-export function getCameraPos(): THREE.Vector3 {
+export function getCamera(): THREE.OrthographicCamera | undefined {
     if (camera === undefined) {
         console.error("The space is not initialized. Try calling `initSpace` first.");
-        return new THREE.Vector3(); // TODO: figure something out, exception?
+        return; // TODO: figure something out, exception?
     }
 
-    return camera.position;
+    return camera;
 }
