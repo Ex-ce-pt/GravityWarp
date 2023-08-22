@@ -18,6 +18,7 @@
 
     button {
         --toggle-border: 0.1em;
+        --animation-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
 
         position: relative;
         width: 2em;
@@ -27,19 +28,22 @@
         border-radius: 0.5em;
         box-sizing: border-box;
         cursor: pointer;
+
+        transition: background-color 0.5s var(--animation-timing-function);
     }
 
     button::after {
         content: '';
         display: block;
         position: absolute;
-        top: 0;
-        left: 0;
-        right: unset;
+        inset: 0;
         height: 100%;
         aspect-ratio: 1 / 1;
         background-color: var(--gray);
         border-radius: calc((1em - var(--toggle-border) * 1) / 2);
+
+        translate: 0;
+        transition: translate 0.5s var(--animation-timing-function);
     }
 
     button.on {
@@ -47,8 +51,7 @@
     }
 
     button.on::after {
-        left: unset;
-        right: 0;
+        translate: calc(2em - 100% - var(--toggle-border) * 2);
     }
 
 </style>
