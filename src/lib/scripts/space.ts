@@ -20,7 +20,7 @@ export const objects: ObjectProperties[] = [];
 
 export function createObject() {
     const newObj = new ObjectProperties();
-    newObj.radius = 100;
+    newObj.radius = 50;
     objects.push(newObj);
     scene.add(newObj.mesh);
 }
