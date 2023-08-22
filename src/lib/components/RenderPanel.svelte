@@ -48,7 +48,6 @@
             
         } else if (e.button === 2) {
             
-            e.preventDefault();
             startDrag(e);
 
         }
@@ -82,7 +81,7 @@
         };
 
         const newWorldPos = {
-            x: -(dragData.startWorldPos.x + offsetMouse.x / zoom),
+            x: dragData.startWorldPos.x - offsetMouse.x / zoom,
             y: dragData.startWorldPos.y + offsetMouse.y / zoom
         };
 
@@ -99,13 +98,14 @@
 
 </script>
 
-<main
-    bind:this={self}
-    on:mousedown={mouseDown}
-    on:mousewheel={mouseWheel}
->
+<main bind:this={self} >
 
-    <canvas bind:this={canvas}></canvas>
+    <canvas
+        bind:this={canvas}
+        on:contextmenu={(e) => { e.preventDefault(); }}
+        on:mousedown={mouseDown}
+        on:mousewheel={mouseWheel}
+    ></canvas>
     
 </main>
 

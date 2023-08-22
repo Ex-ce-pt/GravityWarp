@@ -23,11 +23,6 @@ export function createObject() {
     newObj.radius = 100;
     objects.push(newObj);
     scene.add(newObj.mesh);
-    updateObjects();
-}
-
-export function updateObjects() {
-    
 }
 
 function sizeIntoOrthCameraBounds(width: number, height: number): [number, number, number, number] {
