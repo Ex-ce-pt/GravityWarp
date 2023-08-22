@@ -2,8 +2,9 @@
 
     import { onMount } from "svelte";
     import Header, { HEADER_HEIGHT_PX } from "$lib/components/Header.svelte";
-    import Separator, { separatorPositionRightPx, SEPARATOR_WIDTH } from "$lib/components/Separator.svelte";
     import RenderPanel from "$lib/components/RenderPanel.svelte";
+    import Separator, { separatorPositionRightPx, SEPARATOR_WIDTH } from "$lib/components/Separator.svelte";
+    import Inspector from "$lib/components/Inspector.svelte";
 
     onMount(() => {
         window.addEventListener('resize', () => {
@@ -24,22 +25,15 @@
 
     <Header />
 
+    <RenderPanel />
+    
     <Separator />
 
-    <RenderPanel />
+    <Inspector />
 
 </main>
 
 <style>
-
-    :global(html),
-    :global(body) {
-        width: 100%;
-        height: 100%;
-        padding: 0;
-        margin: 0;
-        overflow: hidden;
-    }
 
     main {
         --render-panel-width: calc(100vw - var(--separator-position-right) - var(--separator-width));

@@ -1,5 +1,6 @@
 import * as THREE from "three"
 import { type Plane, createPlane } from "./plane"
+import { ObjectProperties } from "./objectProperties";
 
 let canvas: HTMLCanvasElement;
 
@@ -14,6 +15,20 @@ let zoomCoefficient: number = 1;
 
 export const MIN_ZOOM = 0.1;
 export const MAX_ZOOM = 3;
+
+export const objects: ObjectProperties[] = [];
+
+export function createObject() {
+    const newObj = new ObjectProperties();
+    newObj.radius = 100;
+    objects.push(newObj);
+    scene.add(newObj.mesh);
+    updateObjects();
+}
+
+export function updateObjects() {
+    
+}
 
 function sizeIntoOrthCameraBounds(width: number, height: number): [number, number, number, number] {
     return [width / -2, width / 2, height / 2, height / -2];

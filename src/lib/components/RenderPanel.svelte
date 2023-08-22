@@ -27,7 +27,7 @@
     }
 
     function resizeCanvasToFit(): void {
-        if (self === undefined) return;
+        if (!self) return;
 
         GW.resize(self.clientWidth, self.clientHeight);
 
@@ -44,6 +44,7 @@
     function mouseDown(e: MouseEvent) {
         if (e.button === 0) {
             
+            GW.createObject();
             
         } else if (e.button === 2) {
             
@@ -73,7 +74,7 @@
         drag(e);
     }
     
-    // TODO: add "center" button
+    // TODO: add "center view" button
     function drag(e: MouseEvent) {
         const offsetMouse = {
             x: e.clientX - dragData.startMousePos.x,
