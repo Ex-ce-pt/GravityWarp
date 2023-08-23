@@ -34,6 +34,11 @@
             label={{ text: "Km", side: 'right' }}
         />
 
+        <NumberField
+            label={{ text: "Km", side: 'right' }}
+            large={true}
+        />
+
     </div>
 
 </main>

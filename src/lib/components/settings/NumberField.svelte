@@ -5,16 +5,22 @@
     export let label: { text: string, side: 'left' | 'right' } | undefined = undefined;
     export let constrain: Constrain | undefined = undefined;
     export let value: number = 0;
+    export let large: boolean = false;
 
     let labelWidth: number = 0;
 
 </script>
 
-<main>
+<main style={large ? 'grid-column-end: span 2;' : ''}>
 
     {#if label !== undefined && label.side === 'left'}
 
-        <span class="left-label" bind:clientWidth={labelWidth}>{label.text}</span>
+        <span
+            class="left-label"
+            bind:clientWidth={labelWidth}
+        >
+            {label.text}
+        </span>
 
     {/if}
 
@@ -29,7 +35,12 @@
 
     {#if label !== undefined && label.side === 'right'}
 
-        <span class="right-label" bind:clientWidth={labelWidth}>{label.text}</span>
+        <span
+            class="right-label"
+            bind:clientWidth={labelWidth}
+        >
+            {label.text}
+        </span>
 
     {/if}
 
@@ -51,13 +62,19 @@
         width: calc(100% - var(--label-width) - var(--label-margin));
         border: none;
         background-color: var(--dark-gray);
-        color: var(--white);
+        color: var(--gray);
         font-size: inherit;
+    }
+
+    input:focus {
+        color: white;
     }
 
     span {
         color: var(--gray);
         font-size: inherit;
+        user-select: none;
+        -webkit-user-select: none;
     }
 
     .left-label {
