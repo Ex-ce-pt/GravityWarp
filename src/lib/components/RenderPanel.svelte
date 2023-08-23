@@ -229,7 +229,7 @@
         border-top: none;
         color: var(--light-gray);
         border-radius: 0 0 1em 1em;
-        font-size: 12pt;
+        font-size: 15px;
         white-space: nowrap;
         clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);
         z-index: 9999;
