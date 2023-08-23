@@ -11,20 +11,23 @@
     <div>
         <span class="label">Animate</span>
 
-        <Toggle />
-
-        <NumberField
-            label={{ text: "X", side: 'left' }}
+        <Toggle
+            notAvailable={true}
         />
-
-        <NumberField
-            label={{ text: "Km", side: 'right' }}
+        
+    </div>
+    
+    <div>
+        <span class="label">Collision</span>
+        
+        <Toggle
+            notAvailable={true}
         />
-
+        
     </div>
 
     <div>
-        <span class="label">E</span>
+        <span class="label">Test</span>
 
         <NumberField
             label={{ text: "X", side: 'left' }}
@@ -32,6 +35,7 @@
 
         <NumberField
             label={{ text: "Km", side: 'right' }}
+            notAvailable={true}
         />
 
         <NumberField

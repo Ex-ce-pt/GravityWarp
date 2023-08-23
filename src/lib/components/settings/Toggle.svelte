@@ -1,8 +1,13 @@
 <script lang="ts">
 
-    export let state = false;
+    export let notAvailable: boolean = false;
+    export let hoverText: string = "";
+    
+    export let state: boolean = false;
 
     function toggle() {
+        if (notAvailable) return;
+
         state = !state;
     }
 
@@ -10,6 +15,8 @@
 
 <button
     class:on={state}
+    data-not-available={notAvailable}
+    title={notAvailable ? "This feature is not available at the moment." : hoverText}
     on:click={toggle}
 >
 </button>
@@ -32,7 +39,7 @@
         transition: background-color 0.5s var(--animation-timing-function);
     }
 
-    button::after {
+    button[data-not-available="false"]::after {
         content: '';
         display: block;
         position: absolute;
@@ -46,11 +53,11 @@
         transition: translate 0.5s var(--animation-timing-function);
     }
 
-    button.on {
+    button[data-not-available="false"].on {
         background-color: var(--white);
     }
 
-    button.on::after {
+    button[data-not-available="false"].on::after {
         translate: calc(2em - 100% - var(--toggle-border) * 2);
     }
 

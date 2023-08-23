@@ -2,16 +2,23 @@
 
     import type { Constrain } from "$lib/scripts/constrain"
 
+    export let notAvailable: boolean = false;
     export let label: { text: string, side: 'left' | 'right' } | undefined = undefined;
     export let constrain: Constrain | undefined = undefined;
-    export let value: number = 0;
     export let large: boolean = false;
+    export let hoverText: string = "";
+
+    export let value: number = 0;
 
     let labelWidth: number = 0;
 
 </script>
 
-<main style={large ? 'grid-column-end: span 2;' : ''}>
+<main
+    style={large ? 'grid-column-end: span 2;' : ''}
+    title={notAvailable ? "This feature is not available at the moment." : hoverText}
+    data-not-available={notAvailable}
+>
 
     {#if label !== undefined && label.side === 'left'}
 
@@ -30,6 +37,7 @@
         min={constrain?.min ?? 0}
         max={constrain?.max ?? 100}
         step={constrain?.step ?? 1}
+        disabled={notAvailable}
         bind:value={value}
     />
 
@@ -56,6 +64,10 @@
         justify-content: center;
         border-bottom: 2px solid var(--gray);
         font-size: 15px;
+    }
+
+    main[data-not-available="true"] {
+        border-bottom-style: dashed;
     }
 
     input {
